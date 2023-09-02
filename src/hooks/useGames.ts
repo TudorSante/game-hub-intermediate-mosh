@@ -1,7 +1,6 @@
-import { useQuery } from "@tanstack/react-query";
+import { useInfiniteQuery } from "@tanstack/react-query";
 import { GameQuery } from "../App";
 import { FetchResponse } from "../services/api-client";
-import apiClient from "../services/api-client";
 import { Platform } from "../hooks/usePlatforms";
 import { gameService } from "../services/services";
 
@@ -15,20 +14,21 @@ export interface Game {
 }
 
 const useGames = (gameQuery: GameQuery) =>
-  useQuery<FetchResponse<Game>, Error>({
-    /* the queryKey parameter is used to det. when a query should be re-fetched.
-    So if your query function depends on a variable (gameQuery), include it in
-    your query key. Finally, query keys act as dependencies for your query fcns. */
+  useInfiniteQuery<FetchResponse<Game>, Error>({
     queryKey: ["games", gameQuery],
-    queryFn: () =>
+    queryFn: ({ pageParam = 1 }) =>
       gameService.getData({
         params: {
           genres: gameQuery.genre?.id,
           parent_platforms: gameQuery.platform?.id,
           ordering: gameQuery.sortOrder,
           search: gameQuery.searchText,
+          page: pageParam,
         },
       }),
+    getNextPageParam: (lastPage, allPages) => {
+      return lastPage.next ? allPages.length + 1 : undefined;
+    },
     // staleTime: 60 * 60 * 1000,
   });
 
