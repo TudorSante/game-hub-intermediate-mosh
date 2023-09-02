@@ -15,7 +15,7 @@ const useGenres = () =>
     queryFn: () => genreService.getData(),
     staleTime: 24 * 60 * 60 * 1000, // for 24h our data will be fresh => no req will be made to the backend to fetch the genres
     // provide initial data to improve the perf of our app
-    initialData: { count: genres.length, next: "", results: genres },
+    initialData: genres,
   });
 
 export default useGenres;

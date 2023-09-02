@@ -16,7 +16,7 @@ const usePlatforms = () =>
     // fresh data for 24h, refetching from the backend will be done only at 24h intervals
     staleTime: 24 * 60 * 60 * 1000,
     // ship our app with platform data to improve the performance of our website
-    initialData: { count: platforms.length, next: "", results: platforms },
+    initialData: platforms,
   });
 
 export default usePlatforms;
