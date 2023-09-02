@@ -1,4 +1,5 @@
 import { useQuery } from "@tanstack/react-query";
+import ms from "ms";
 import platforms from "../data/platforms";
 import { platformService } from "../services/services";
 
@@ -14,7 +15,7 @@ const usePlatforms = () =>
     queryKey: ["platforms"],
     queryFn: () => platformService.getData(),
     // fresh data for 24h, refetching from the backend will be done only at 24h intervals
-    staleTime: 24 * 60 * 60 * 1000,
+    staleTime: ms("24h"),
     // ship our app with platform data to improve the performance of our website
     initialData: platforms,
   });
