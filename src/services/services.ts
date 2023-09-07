@@ -1,7 +1,7 @@
 import APIClient from "./api-client";
-import { Game } from "../hooks/useGames";
-import { Platform } from "../hooks/usePlatforms";
-import { Genre } from "../hooks/useGenres";
+import { Game } from "../entities/Game";
+import { Platform } from "../entities/Platform";
+import { Genre } from "../entities/Genre";
 
 export const gameService = new APIClient<Game>("games");
 export const platformService = new APIClient<Platform>(
